@@ -1,0 +1,57 @@
+//$InternalVariable_1.pasir = $Modbus_1.dataINT + $Modbus_1.dataFLOAT/100;
+$InternalVariable_2.dataGetF = $Modbus_1.dataFLOAT;
+$InternalVariable_2.dataGetS = $Modbus_1.dataINT;
+
+//membaca data dari indicator 1
+$InternalVariable_2.ReadDataID1 = $Modbus_1.dataINT + $Modbus_1.dataFLOAT/100; 
+
+//mengambil data tertinggi dari indicator 1
+if($InternalVariable_2.ReadDataID1 > $InternalVariable_2.LastDataID1){
+$InternalVariable_2.LastDataID1 = $InternalVariable_2.ReadDataID1;
+}
+
+//split data indicator 1
+if($InternalVariable_2.LastDataID1 - 10 > $InternalVariable_2.ReadDataID1){
+if($InternalVariable_2.splitDataID1 === false){
+$InternalVariable_2.splitDataID1 = true;
+}
+else {
+$InternalVariable_2.splitDataID1 = false;
+}
+} 
+
+//menampilkan data sesuai split
+if($InternalVariable_2.splitDataID1 === false){
+$InternalVariable_2.pasirON = true;
+$InternalVariable_2.batuON = false;
+}
+else {
+$InternalVariable_2.pasirON = false;
+$InternalVariable_2.batuON = true;
+}
+
+if($InternalVariable_2.pasirON === true){
+if($InternalVariable_2.lockPasir === false){
+$InternalVariable_1.pasir = $InternalVariable_2.ReadDataID1;
+}
+}
+else {
+if($InternalVariable_2.lockPasir === false){
+$InternalVariable_2.lockPasir = true;
+$InternalVariable_1.pasir = $InternalVariable_2.LastDataID1;
+$InternalVariable_2.LastDataID1 = 0;
+}
+}
+
+if($InternalVariable_2.batuON === true){
+//if($InternalVariable_2.lockBatu === false){
+$InternalVariable_1.batu = $InternalVariable_2.ReadDataID1;
+//}
+}
+else {
+if($InternalVariable_2.lockBatu === false){
+$InternalVariable_2.lockBatu = true;
+$InternalVariable_1.batu = $InternalVariable_2.LastDataID1;
+$InternalVariable_2.LastDataID1 = 0;
+}
+}
