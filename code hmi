@@ -11,7 +11,10 @@ $InternalVariable_2.LastDataID1 = $InternalVariable_2.ReadDataID1;
 }
 
 //split data indicator 1
-if($InternalVariable_2.LastDataID1 - 10 > $InternalVariable_2.ReadDataID1){
+//Ini fungsi split
+//kondisi ketika data terakhir terbaca dikurangi dengan nilai aktual kurang dari 10
+//berarti terjadi penurunan beban, dianggap pengukuran selesai
+if($InternalVariable_2.LastDataID1 - 10 > $InternalVariable_2.ReadDataID1){ 
 if($InternalVariable_2.splitDataID1 === false){
 $InternalVariable_2.splitDataID1 = true;
 }
@@ -21,6 +24,7 @@ $InternalVariable_2.splitDataID1 = false;
 } 
 
 //menampilkan data sesuai split
+//Ini fungsi split
 if($InternalVariable_2.splitDataID1 === false){
 $InternalVariable_2.pasirON = true;
 $InternalVariable_2.batuON = false;
@@ -30,26 +34,26 @@ $InternalVariable_2.pasirON = false;
 $InternalVariable_2.batuON = true;
 }
 
-if($InternalVariable_2.pasirON === true){
-if($InternalVariable_2.lockPasir === false){
-$InternalVariable_1.pasir = $InternalVariable_2.ReadDataID1;
+if($InternalVariable_2.pasirON === true){  //kondisi ketika data posisi pada pasir ON
+if($InternalVariable_2.lockPasir === false){ //kondisi ketika nilai belum terlock (belum selesai)
+$InternalVariable_1.pasir = $InternalVariable_2.ReadDataID1; //menampilkan nilai terbaca
 }
 }
 else {
-if($InternalVariable_2.lockPasir === false){
-$InternalVariable_2.lockPasir = true;
-$InternalVariable_1.pasir = $InternalVariable_2.LastDataID1;
-$InternalVariable_2.LastDataID1 = 0;
+if($InternalVariable_2.lockPasir === false){ //kondisi ketika data pada pasir OFF
+$InternalVariable_2.lockPasir = true;  //melakukan lock pada nilai (belum selesai)
+$InternalVariable_1.pasir = $InternalVariable_2.LastDataID1; //melakukan copy data terakhir terbaca
+$InternalVariable_2.LastDataID1 = 0; //melakukan reset pada data terakhir terbaca atau variable lastdata
 }
 }
 
-if($InternalVariable_2.batuON === true){
+if($InternalVariable_2.batuON === true){ //Kondisi ketika data posisi pada batu ON
 //if($InternalVariable_2.lockBatu === false){
 $InternalVariable_1.batu = $InternalVariable_2.ReadDataID1;
 //}
 }
 else {
-if($InternalVariable_2.lockBatu === false){
+if($InternalVariable_2.lockBatu === false){ //kondisi ketika data pada batu OFF
 $InternalVariable_2.lockBatu = true;
 $InternalVariable_1.batu = $InternalVariable_2.LastDataID1;
 $InternalVariable_2.LastDataID1 = 0;
